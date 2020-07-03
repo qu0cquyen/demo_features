@@ -37,7 +37,6 @@ class _FormPageState extends State<FormPage>{
     },
   ];
 
-  //Map<String, Widget> component = {"label": Text},
 
   List<Widget> _widgetTranslation(List<Map> data){
     List<Widget> lstWidget = []; 
@@ -65,7 +64,7 @@ class _FormPageState extends State<FormPage>{
       }
 
       if(m["type"] == "dropdown"){
-        print(m["dropdownData"].values);
+        //print(m["dropdownData"].values); 
         lstWidget.add(
           Container(
             width: 300,
@@ -83,21 +82,13 @@ class _FormPageState extends State<FormPage>{
                 Expanded(
                   flex: 1, 
                   child: DropdownButton<String>(
-                    value: 'A', 
-                    items: m["dropdownData"].values.map((value){
-                      print(value.toString());
-                      return new DropdownMenuItem(
-                        value: value.toString(), 
-                        child: Text(value.toString()),
+                    value: m["dropdownData"].values.first, 
+                    items: m["dropdownData"].values.map<DropdownMenuItem<String>>((value){
+                      return new DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
                       );
                     }).toList(), 
-                    
-                    // items: <String>['A', 'B', 'C', 'D'].map((String value){
-                    //   return new DropdownMenuItem(
-                    //     value: value, 
-                    //     child: Text(value), 
-                    //   );
-                    // }).toList(),
                     onChanged: (_){},
                   ),
                 ),

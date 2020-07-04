@@ -1,3 +1,4 @@
+import 'package:demo_features/model/text_component.dart';
 import 'package:flutter/material.dart';
 
 class FormPage extends StatefulWidget{
@@ -40,27 +41,31 @@ class _FormPageState extends State<FormPage>{
 
   List<Widget> _widgetTranslation(List<Map> data){
     List<Widget> lstWidget = []; 
+    TextBoxComponent textBox;
 
     for(Map m in data){
       if(m["type"] == "text"){
-        lstWidget.add(Container(
-          width: 300,
-          padding: const EdgeInsets.all(10),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: m["label"],
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            validator: m["required"]? (value){
-              if(value.isEmpty){
-                return m["label"] + " is Empty"; 
-              }
-              return null; 
-            } : null, 
-          ),
-        )); 
+        textBox = new TextBoxComponent(m["type"], m["label"], m["required"]); 
+        lstWidget.add(textBox.buildWidget());
+      
+        // lstWidget.add(Container(
+        //   width: 300,
+        //   padding: const EdgeInsets.all(10),
+        //   child: TextFormField(
+        //     decoration: InputDecoration(
+        //       hintText: m["label"],
+        //       border: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(10),
+        //       ),
+        //     ),
+        //     validator: m["required"]? (value){
+        //       if(value.isEmpty){
+        //         return m["label"] + " is Empty"; 
+        //       }
+        //       return null; 
+        //     } : null, 
+        //   ),
+        // )); 
       }
 
       if(m["type"] == "dropdown"){
@@ -106,7 +111,8 @@ class _FormPageState extends State<FormPage>{
             child: RaisedButton(
               onPressed: (){
                 if(_formKey.currentState.validate()){
-                 print("Processing Data.....");
+                  print("Processing Data.....");
+                  print(textBox.getTextBox);
                 }
               },
               child: Text(m["label"]),

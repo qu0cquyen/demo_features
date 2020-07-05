@@ -2,16 +2,11 @@ import 'package:demo_features/model/components.dart';
 import 'package:flutter/material.dart'; 
 
 class TextBoxComponent extends GeneralWidget{
-
-  static List<Map> lstTextBox = []; 
-
   static Map<String, String> boxValue = {}; 
 
-  Map textBoxValue = {}; 
-  final bool isRequired; 
   final TextEditingController _controller = new TextEditingController(); 
   
-  TextBoxComponent(String type, String label, this.isRequired) : super(type, label);
+  TextBoxComponent(String type, String label, bool isRequired) : super(type, label, isRequired);
 
   void _checkExistingElement(Map mapBox, String label, String value){
     if(mapBox.containsKey(label)){

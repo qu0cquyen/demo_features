@@ -1,3 +1,4 @@
+import 'package:demo_features/model/dropdown_component.dart';
 import 'package:demo_features/model/text_component.dart';
 import 'package:flutter/material.dart';
 
@@ -32,95 +33,77 @@ class _FormPageState extends State<FormPage>{
       "dropdownData": {"AUS": "Australia", "CAD": "Canada", "USA": "America"},
       "required": false, 
     },
-    {
-      "type": "submit", 
-      "label": "Submit", 
-    },
   ];
 
 
   List<Widget> _widgetTranslation(List<Map> data){
     List<Widget> lstWidget = []; 
     TextBoxComponent textBox;
+    DropDownComponent dropDown; 
 
     for(Map m in data){
       if(m["type"] == "text"){
         textBox = new TextBoxComponent(m["type"], m["label"], m["required"]); 
         lstWidget.add(textBox.buildWidget());
-      
-        // lstWidget.add(Container(
-        //   width: 300,
-        //   padding: const EdgeInsets.all(10),
-        //   child: TextFormField(
-        //     decoration: InputDecoration(
-        //       hintText: m["label"],
-        //       border: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(10),
-        //       ),
-        //     ),
-        //     validator: m["required"]? (value){
-        //       if(value.isEmpty){
-        //         return m["label"] + " is Empty"; 
-        //       }
-        //       return null; 
-        //     } : null, 
-        //   ),
-        // )); 
       }
 
       if(m["type"] == "dropdown"){
+        dropDown = new DropDownComponent(m["type"], m["label"], m["required"], m["dropdownData"]);
+        lstWidget.add(dropDown.buildWidget());
+
+
+
+
         //print(m["dropdownData"].values); 
-        lstWidget.add(
-          Container(
-            width: 300,
-            padding: const EdgeInsets.all(10), 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  flex: 0, 
-                  child: Text(m["label"]),
-                ),
+        // lstWidget.add(
+        //   Container(
+        //     width: 300,
+        //     padding: const EdgeInsets.all(10), 
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //       children: <Widget>[
+        //         Expanded(
+        //           flex: 0, 
+        //           child: Text(m["label"]),
+        //         ),
                 
-                SizedBox(width: 10,), 
+        //         SizedBox(width: 10,), 
 
-                Expanded(
-                  flex: 1, 
-                  child: DropdownButton<String>(
-                    value: m["dropdownData"].values.first, 
-                    items: m["dropdownData"].values.map<DropdownMenuItem<String>>((value){
-                      return new DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(), 
-                    onChanged: (_){},
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ); 
+        //         Expanded(
+        //           flex: 1, 
+        //           child: DropdownButton<String>(
+        //             value: m["dropdownData"].values.first, 
+        //             items: m["dropdownData"].values.map<DropdownMenuItem<String>>((value){
+        //               return new DropdownMenuItem<String>(
+        //                 value: value,
+        //                 child: Text(value),
+        //               );
+        //             }).toList(), 
+        //             onChanged: (_){},
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ); 
       }
 
-      if(m["type"] == "submit"){
-        lstWidget.add(
-          Container(
-            width: 300,
-            padding: const EdgeInsets.all(10), 
-            child: RaisedButton(
-              onPressed: (){
-                if(_formKey.currentState.validate()){
-                  print("Processing Data.....");
-                  print(textBox.getTextBox);
-                }
-              },
-              child: Text(m["label"]),
-            ),
-          ),
-        );
-      }
     }
+    lstWidget.add(
+      Container(
+        width: 300,
+        padding: const EdgeInsets.all(10), 
+        child: RaisedButton(
+          onPressed: (){
+            if(_formKey.currentState.validate()){
+              print("Processing Data.....");
+              print(textBox.getTextBox);
+            }
+          },
+          child: Text("Submit"),
+        ),
+      ),
+    );
     return lstWidget; 
   }
 

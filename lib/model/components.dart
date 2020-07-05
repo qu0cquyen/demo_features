@@ -1,6 +1,7 @@
 class GeneralWidget{
-  final String type; 
-  final String label; 
+  String type; 
+  String label; 
+  bool isRequired;
 
-  GeneralWidget(this.type, this.label); 
+  GeneralWidget(this.type, this.label, this.isRequired); 
 }

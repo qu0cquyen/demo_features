@@ -1,5 +1,6 @@
 import 'package:demo_features/model/custom_dropdown.dart';
 import 'package:demo_features/model/dropdown_component.dart';
+import 'package:demo_features/model/radio_component.dart';
 import 'package:demo_features/model/text_component.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,7 @@ class _FormPageState extends State<FormPage>{
     TextBoxComponent textBox;
     DropDownComponent dropDown; 
     CustomDropDown cusDropDown; 
+    RadioComponent radioComponent; 
 
     for(Map m in data){
       if(m["type"] == "text"){
@@ -62,7 +64,10 @@ class _FormPageState extends State<FormPage>{
       }
 
       if(m["type"] == "radio"){
-        
+        // radioComponent = new RadioComponent(m["type"], m["label"], m["required"], m["radioData"]); 
+        // lstWidget.add(radioComponent.buildWidget()); 
+        radioComponent = new RadioComponent(type: m["type"], label: m["label"], radioData: m["radioData"]);
+        lstWidget.add(radioComponent);
       }
 
     }

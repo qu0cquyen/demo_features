@@ -8,6 +8,8 @@ class TextBoxComponent extends GeneralWidget{
   
   TextBoxComponent(String type, String label, bool isRequired) : super(type, label, isRequired);
 
+  Map<String, String> get getTextBox => boxValue;
+
   void _checkExistingElement(Map mapBox, String label, String value){
     if(mapBox.containsKey(label)){
       if(mapBox[label] != value){
@@ -42,7 +44,7 @@ class TextBoxComponent extends GeneralWidget{
             return null; 
           }
           
-        }
+        },
         // validator: isRequired? (value){
         //   if(value.isEmpty){
         //     return label + " is required "; 
@@ -53,7 +55,7 @@ class TextBoxComponent extends GeneralWidget{
     ); 
   }
 
-  Map get getTextBox => boxValue;
+  
 
   // //String get textValue => "${_controller.text}";
   // void printOut(){

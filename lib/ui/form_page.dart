@@ -1,3 +1,4 @@
+import 'package:demo_features/model/custom_dropdown.dart';
 import 'package:demo_features/model/dropdown_component.dart';
 import 'package:demo_features/model/text_component.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,12 @@ class _FormPageState extends State<FormPage>{
       "type": "dropdown", 
       "label": "Country", 
       "dropdownData": {"AUS": "Australia", "CAD": "Canada", "USA": "America"},
-      "required": false, 
+      "required": false, // Doesn't matter with the current implementation
+    },
+    {
+      "type": "radio", 
+      "label": "Sex", 
+      "radioData": {"M": "Male", "F": "Female", "X": "Others"}, 
     },
   ];
 
@@ -40,6 +46,7 @@ class _FormPageState extends State<FormPage>{
     List<Widget> lstWidget = []; 
     TextBoxComponent textBox;
     DropDownComponent dropDown; 
+    CustomDropDown cusDropDown; 
 
     for(Map m in data){
       if(m["type"] == "text"){
@@ -48,44 +55,14 @@ class _FormPageState extends State<FormPage>{
       }
 
       if(m["type"] == "dropdown"){
-        dropDown = new DropDownComponent(m["type"], m["label"], m["required"], m["dropdownData"]);
-        lstWidget.add(dropDown.buildWidget());
+        //dropDown = new DropDownComponent(m["type"], m["label"], m["required"], m["dropdownData"]);
+        //lstWidget.add(dropDown.buildWidget());
+        cusDropDown = new CustomDropDown(m["type"], m["label"], m["required"], m["dropdownData"]); 
+        lstWidget.add(cusDropDown.buildWidget());
+      }
 
-
-
-
-        //print(m["dropdownData"].values); 
-        // lstWidget.add(
-        //   Container(
-        //     width: 300,
-        //     padding: const EdgeInsets.all(10), 
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //       children: <Widget>[
-        //         Expanded(
-        //           flex: 0, 
-        //           child: Text(m["label"]),
-        //         ),
-                
-        //         SizedBox(width: 10,), 
-
-        //         Expanded(
-        //           flex: 1, 
-        //           child: DropdownButton<String>(
-        //             value: m["dropdownData"].values.first, 
-        //             items: m["dropdownData"].values.map<DropdownMenuItem<String>>((value){
-        //               return new DropdownMenuItem<String>(
-        //                 value: value,
-        //                 child: Text(value),
-        //               );
-        //             }).toList(), 
-        //             onChanged: (_){},
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ); 
+      if(m["type"] == "radio"){
+        
       }
 
     }
@@ -98,6 +75,9 @@ class _FormPageState extends State<FormPage>{
             if(_formKey.currentState.validate()){
               print("Processing Data.....");
               print(textBox.getTextBox);
+              print(cusDropDown.getSelectedData);
+              
+              
             }
           },
           child: Text("Submit"),

@@ -1,12 +1,16 @@
 import 'package:demo_features/model/components.dart';
 import 'package:flutter/material.dart'; 
 
+
 class RadioComponent extends StatefulWidget{
   final String type; 
   final String label; 
   final Map<String, String> radioData; 
 
-  RadioComponent({Key key, @required this.type, @required this.label, @required this.radioData}) : super(key: key); 
+  // Callback function return current Selected value 
+  final Function(Map<String, String>) onValueChanged; 
+
+  RadioComponent({Key key, @required this.type, @required this.label, @required this.radioData, @required this.onValueChanged}) : super(key: key); 
 
   @override
   _RadioComponentState createState() => _RadioComponentState(); 
@@ -24,12 +28,12 @@ class _RadioComponentState extends State<RadioComponent>{
 
   List<Widget> buildRadio(){
     List<Widget> lstRadio = []; 
+
+    
     widget.radioData.forEach((key, value){
       lstRadio.add(
         Expanded(flex: 1, 
-        child: 
-        Container(
-          width: 50,
+        
           child: RadioListTile(
           title: Text(value), 
           value: key, 
@@ -37,10 +41,13 @@ class _RadioComponentState extends State<RadioComponent>{
           onChanged: (newValue){
             setState((){
               _currentSelected = {newValue: widget.radioData[newValue]}; 
+
+              // Callback function return current Selected Value
+              widget.onValueChanged(_currentSelected);
             });
           },
         ),
-        ),
+        
         ),
         
         
@@ -52,8 +59,25 @@ class _RadioComponentState extends State<RadioComponent>{
   @override 
   Widget build(BuildContext context){
     return Container(
+      padding: const EdgeInsets.all(10),
+      width: 300,
       child: Row(
-        children: buildRadio(),
+        children: <Widget>[
+          Expanded(
+            flex: 0, 
+            child: Text(widget.label),
+          ),
+
+          Expanded(
+            flex: 1, 
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: buildRadio(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
